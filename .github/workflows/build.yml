@@ -42,6 +42,11 @@ jobs:
           docker run --rm ${{ env.TEST_TAG }} npm -v
 #          docker run --rm ${{ env.TEST_TAG }} create-image.sh help
 
+      - name: Generate custom tag
+        run: |
+          customTag=$(docker run --rm --entrypoint sh ${TEST_TAG} /sbin/ktversion)
+          echo "KT_VERSION=${customTag}" >> $GITHUB_ENV
+
       - name: Build and push Docker image with timestamp
         uses: docker/build-push-action@v6
         with:
@@ -49,4 +54,5 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE }}:${{ env.DATE_TAG }}
+            ${{ env.IMAGE }}:${{ env.KT_VERSION }}
             ${{ env.IMAGE }}:latest

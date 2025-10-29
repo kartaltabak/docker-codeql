@@ -33,3 +33,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 # # Define the command for jq as the entrypoint
 # # This will be executed when the container starts without a specific command
 # CMD ["jq", "-r", "--compact-output", ".runs[0] | ( .tool.driver.rules | map({ (.id): .defaultConfiguration.level }) | add ) as $ruleLevels | [.results[] | $ruleLevels[.ruleId]] | reduce .[] as $item ({}; .[$item] += 1)", "sarif-results/javascript.sarif"]
+
+ARG KTVERSION_FILE="/sbin/ktversion"
+
+RUN echo "#!/usr/bin/env bash" > ${KTVERSION_FILE} && \
+    echo -n "echo " >> ${KTVERSION_FILE} && \
+    echo -n "node-$(node -v)" >> ${KTVERSION_FILE} && \
+    chmod +x ${KTVERSION_FILE}
