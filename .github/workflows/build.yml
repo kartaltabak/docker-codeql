@@ -38,9 +38,8 @@ jobs:
 
       - name: Run Docker test command
         run: |
-          echo test
-#          docker run --rm ${{ env.TEST_TAG }} curl --version
-#          docker run --rm ${{ env.TEST_TAG }} jq --version
+          docker run --rm ${{ env.TEST_TAG }} node -v
+          docker run --rm ${{ env.TEST_TAG }} npm -v
 #          docker run --rm ${{ env.TEST_TAG }} create-image.sh help
 
       - name: Build and push Docker image with timestamp

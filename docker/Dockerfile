@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM node:24
 
 # Set environment variables for non-interactive installation
 ENV DEBIAN_FRONTEND=noninteractive
