@@ -42,6 +42,7 @@ jobs:
           docker run --rm ${{ env.TEST_TAG }} npm -v
           docker run --rm ${{ env.TEST_TAG }} codeql version  --format=terse
           docker run --rm ${{ env.TEST_TAG }} sarif --version
+          docker run --rm ${{ env.TEST_TAG }} jq --version
 
       - name: Generate custom tag
         run: |

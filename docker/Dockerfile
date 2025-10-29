@@ -3,7 +3,9 @@ FROM node:24
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install -y pip && \
+    apt-get install -y  \
+      pip  \
+      jq && \
     pip install --no-cache-dir --break-system-packages sarif-tools
 
 # Download and set up CodeQL CLI
