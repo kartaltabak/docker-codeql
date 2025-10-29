@@ -2,22 +2,9 @@ FROM node:24
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Install dependencies: curl, tar, gzip, git, python3-pip, jq, and Node.js
-# RUN apt-get update && \
-    # apt-get install -y \
-        # curl \
-        # tar \
-        # gzip \
-        # git \
-        # python3-pip \
-        # jq \
-        # nodejs \
-        # npm 
-
-# Install pipx and sarif-tools
-# RUN pip install pipx && \
-    # pipx ensurepath && \
-    # pipx install sarif-tools
+RUN apt-get update && \
+    apt-get install -y pip && \
+    pip install --no-cache-dir --break-system-packages sarif-tools
 
 # Download and set up CodeQL CLI
 RUN mkdir /opt/codeql && \
@@ -35,4 +22,5 @@ RUN echo "#!/usr/bin/env bash" > ${KTVERSION_FILE} && \
     echo -n "echo " >> ${KTVERSION_FILE} && \
     echo -n "codeql-$(codeql version --format=terse)" >> ${KTVERSION_FILE} && \
     echo -n "-node-$(node -v | sed 's/^v//')" >> ${KTVERSION_FILE} && \
+    echo -n "-sarif-tools-$(sarif --version | awk '{print $3}' | sed 's/^v//')" >> ${KTVERSION_FILE} && \
     chmod +x ${KTVERSION_FILE}
