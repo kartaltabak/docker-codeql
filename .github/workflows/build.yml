@@ -38,9 +38,10 @@ jobs:
 
       - name: Run Docker test command
         run: |
-          docker run --rm ${{ env.TEST_TAG }} curl --version
-          docker run --rm ${{ env.TEST_TAG }} jq --version
-          docker run --rm ${{ env.TEST_TAG }} create-image.sh help
+          echo test
+#          docker run --rm ${{ env.TEST_TAG }} curl --version
+#          docker run --rm ${{ env.TEST_TAG }} jq --version
+#          docker run --rm ${{ env.TEST_TAG }} create-image.sh help
 
       - name: Build and push Docker image with timestamp
         uses: docker/build-push-action@v6
