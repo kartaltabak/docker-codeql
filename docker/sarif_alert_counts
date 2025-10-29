@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# Script: sarif_alert_counts
+# Description: Parses a SARIF file and counts alerts by their default configuration level.
+# Usage: ./sarif_alert_counts <sarif_file>
+#
+
+set -euo pipefail
+
+# Check if jq is installed
+if ! command -v jq &> /dev/null
+then
+    echo "Error: jq is not installed. Please install jq to run this script." >&2
+    exit 1
+fi
+
+# Check if a file argument is provided
+if [ -z "$1" ]
+then
+    echo "Usage: ./sarif_alert_counts <sarif_file>" >&2
+    exit 1
+fi
+
+# Check if the provided file exists
+if [ ! -f "$1" ]
+then
+    echo "Error: File '$1' not found." >&2
+    exit 1
+fi
+
+jq -r \
+  --compact-output \
+  '.runs[0] | ( .tool.driver.rules | map({ (.id): .defaultConfiguration.level }) | add ) as $ruleLevels | [.results[] | $ruleLevels[.ruleId]] | reduce .[] as $item ({}; .[$item] += 1)' \
+  "$1"

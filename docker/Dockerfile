@@ -16,6 +16,8 @@ RUN mkdir /opt/codeql && \
     tar -xzf codeql-bundle.tar.gz -C . --strip-components=1 && \
     rm codeql-bundle.tar.gz
 
+COPY sarif_alert_counts /usr/local/bin/sarif_alert_counts
+
 ENV PATH="/opt/codeql:$PATH"
 
 ARG KTVERSION_FILE="/sbin/ktversion"
