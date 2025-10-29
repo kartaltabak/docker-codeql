@@ -40,7 +40,7 @@ jobs:
         run: |
           docker run --rm ${{ env.TEST_TAG }} node -v
           docker run --rm ${{ env.TEST_TAG }} npm -v
-#          docker run --rm ${{ env.TEST_TAG }} create-image.sh help
+          docker run --rm ${{ env.TEST_TAG }} codeql version  --format=terse
 
       - name: Generate custom tag
         run: |
